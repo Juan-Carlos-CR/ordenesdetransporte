@@ -43,7 +43,14 @@ public class OrderService {
 
     public List<OrderResponseDTO> getOrders(OrderStatus status, String origin, String destination, LocalDateTime startDate, LocalDateTime endDate) {
         Specification<Order> spec = OrderSpecification.filterBy(status, origin, destination, startDate, endDate);
-        return orderRepository.findAll(spec).stream()
+
+        List<Order> orders = orderRepository.findAll(spec);
+
+        if (orders.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontraron órdenes con los filtros especificados");
+        }
+
+        return orders.stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }

@@ -1,7 +1,7 @@
 package com.ordenesdetransporte.controller;
 
-import com.ordenesdetransporte.domain.Driver;
-import com.ordenesdetransporte.repository.DriverRepository;
+import com.ordenesdetransporte.dto.DriverDTO;
+import com.ordenesdetransporte.service.DriverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +14,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DriverController {
 
-    private final DriverRepository driverRepository;
+    private final DriverService driverService;
 
-    @GetMapping
-    public ResponseEntity<List<Driver>> getAllDrivers() {
-        return ResponseEntity.ok(driverRepository.findAll());
+    @GetMapping("/active")
+    public ResponseEntity<List<DriverDTO>> getActiveDrivers() {
+        return ResponseEntity.ok(driverService.getActiveDrivers());
     }
 
     @PostMapping
-    public ResponseEntity<Driver> createDriver(@RequestBody Driver driver) {
-        Driver savedDriver = driverRepository.save(driver);
-        return new ResponseEntity<>(savedDriver, HttpStatus.CREATED);
+    public ResponseEntity<DriverDTO> createDriver(@RequestBody DriverDTO dto) {
+        return new ResponseEntity<>(driverService.createDriver(dto), HttpStatus.CREATED);
     }
 }

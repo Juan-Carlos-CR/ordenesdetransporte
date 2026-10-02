@@ -1,13 +1,9 @@
 package com.ordenesdetransporte.service;
 
-
-import com.ordenesdetransporte.dto.*;
-import com.ordenesdetransporte.exception.BadRequestException;
+import com.ordenesdetransporte.dto.DriverDTO;
+import com.ordenesdetransporte.domain.Driver;
 import com.ordenesdetransporte.exception.ResourceNotFoundException;
-import com.ordenesdetransporte.domain.*;
 import com.ordenesdetransporte.repository.DriverRepository;
-import com.ordenesdetransporte.repository.OrderRepository;
-import com.ordenesdetransporte.repository.OrderSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +27,15 @@ public class DriverService {
     }
 
     public List<DriverDTO> getActiveDrivers() {
-        return driverRepository.findByActiveTrue().stream()
+        List<DriverDTO> activeDrivers = driverRepository.findByActiveTrue().stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
+
+        if (activeDrivers.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontraron conductores activos registrados");
+        }
+
+        return activeDrivers;
     }
 
     public Driver getDriverEntityById(UUID id) {

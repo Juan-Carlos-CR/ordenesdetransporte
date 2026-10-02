@@ -1,4 +1,4 @@
-package com.ordenesdetransporte;
+package com.ordenesdetransporte.service;
 
 
 import com.ordenesdetransporte.dto.OrderResponseDTO;
@@ -7,8 +7,6 @@ import com.ordenesdetransporte.domain.Order;
 import com.ordenesdetransporte.domain.OrderStatus;
 import com.ordenesdetransporte.exception.ResourceNotFoundException;
 import com.ordenesdetransporte.repository.OrderRepository;
-import com.ordenesdetransporte.service.DriverService;
-import com.ordenesdetransporte.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
